@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>Admin - Safitech</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    .error-message {
+      color: red;
+      margin-top: 8px;
+      font-size: 14px;
+      display: none;
+    }
+    .delete-btn {
+      background: #c0392b;
+      color: #fff;
+      border: none;
+      padding: 5px 10px;
+      margin-top: 8px;
+      cursor: pointer;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    .delete-btn:hover {
+      background: #e74c3c;
+    }
+  </style>
+</head>
+<body>
+  
+  <div class="container" style="padding:40px 0;">
+    <h2 class="section-title">Admin Panel</h2>
+    <div style="max-width:800px;margin:0 auto;">
+      
+      <!-- Login box -->
+      <div id="loginBox">
+        <label>Admin Password</label>
+        <input id="adminPassword" type="password" style="width:100%;padding:10px;margin:10px 0;">
+        <button id="loginBtn" class="btn">Login</button>
+        <p id="loginError" class="error-message">Invalid password. Please try again.</p>
+      </div>
+      
+      <!-- Messages box -->
+      <div id="messagesBox" style="display:none;margin-top:20px;">
+        <button id="logoutBtn" class="btn" style="background:#444;margin-bottom:15px;">Logout</button>
+        <h3>Messages</h3>
+        <ul id="messageList" style="list-style:none;padding:0;"></ul>
+      </div>
+
+    </div>
+  </div>
+
+<script>
+const loginBtn = document.getElementById('loginBtn');
+const logoutBtn = document.getElementById('logoutBtn');
+const adminPasswordInput = document.getElementById('adminPassword');
+const loginBox = document.getElementById('loginBox');
+const messagesBox = document.getElementById('messagesBox');
+const messageList = document.getElementById('messageList');
+const loginError = document.getElementById('loginError');
+let adminPassword = '';
+
+// Handle login
+loginBtn.addEventListener('click', async () => {
+  adminPassword = adminPasswordInput.value.trim();
+  loginError.style.display = 'none'; 
+
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ password: adminPassword })
+    });
+
+    if (res.ok) {
+      loginBox.style.display = 'none';
+      messagesBox.style.display = 'block';
+      loadMessages();
+    } else {
+      loginError.style.display = 'block';
+      adminPasswordInput.value = '';
+    }
+  } catch (err) {
+    loginError.textContent = 'Network error. Please try again later.';
+    loginError.style.display = 'block';
+  }
+});
+
+// Handle logout
+logoutBtn.addEventListener('click', () => {
+  adminPassword = '';
+  adminPasswordInput.value = '';
+  messagesBox.style.display = 'none';
+  loginBox.style.display = 'block';
+  messageList.innerHTML = '';
+});
+
+// Load messages
+async function loadMessages() {
+  if (!adminPassword) {
+    alert("Please log in first!");
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/admin/messages', {
+      headers: { 'x-admin-password': adminPassword }
+    });
+
+    if (!res.ok) {
+      const errorText = await res.text();
+      console.error("Error loading messages:", res.status, errorText);
+      messageList.innerHTML =
+        `<li style="color:red;">Failed to load messages (${res.status})</li>`;
+      return;
+    }
+
+    const data = await res.json();
+    messageList.innerHTML = '';
+    data.reverse().forEach(msg => {
+      const li = document.createElement('li');
+      li.style.padding = '12px';
+      li.style.borderBottom = '1px solid #eee';
+      li.innerHTML = `
+        <strong>${msg.name}</strong> <small>(${msg.email})</small><br>
+        <small>${msg.receivedAt}</small>
+        <p>${msg.message}</p>
+        <button class="delete-btn" onclick="deleteMessage(${msg.id})">Delete</button>
+      `;
+      messageList.appendChild(li);
+    });
+
+  } catch (err) {
+    console.error("Network error:", err);
+    messageList.innerHTML = `<li style="color:red;">Network error: ${err.message}</li>`;
+  }
+}
+
+// Delete a message
+async function deleteMessage(id) {
+  if (!confirm("Are you sure you want to delete this message?")) return;
+
+  try {
+    const res = await fetch(`/api/admin/messages/${id}`, {
+      method: 'DELETE',
+      headers: { 'x-admin-password': adminPassword }
+    });
+
+    if (res.ok) {
+      loadMessages(); // refresh list
+    } else {
+      alert("Failed to delete message");
+    }
+  } catch (err) {
+    alert("Network error while deleting message");
+  }
+}
+</script>
+</body>
+</html>
