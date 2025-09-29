@@ -167,51 +167,51 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   /* Show hamburger */
   .menu-toggle {
     display: block;
+    cursor: pointer;
+    z-index: 1001; /* keep above sidebar */
   }
 
-  /* Hide nav-links initially */
+  /* Sidebar nav-links */
   .nav-links {
-    display: none;
-    flex-direction: column;   /* stack vertically */
-    background: #fff;         /* white background */
-    position: absolute;
-    top: 60px;                /* just below navbar */
-    left: 50%;
-    transform: translateX(-50%); /* center horizontally */
-    width: 80%;               /* narrower than full screen */
-    max-width: 320px;         /* limit max size */
-    padding: 15px 0;
-    border-radius: 10px;      /* smooth rounded corners */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* subtle shadow */
+    position: fixed;
+    top: 0;
+    right: -220px;           /* hide off-screen */
+    width: 200px;            /* smaller width */
+    height: 100%;            /* full height */
+    background: #fff;        /* white background */
+    flex-direction: column;
+    padding: 60px 15px;      /* space for top bar */
+    border-radius: 10px 0 0 10px;
+    box-shadow: -4px 0 8px rgba(0,0,0,0.1);
+    transition: right 0.3s ease;
+    z-index: 1000;
   }
 
-  /* Show links when .active is added */
+  /* Show links when active */
   .nav-links.active {
-    display: flex;
+    right: 0;  /* slide in */
   }
 
   .nav-links li {
-    text-align: center;
-    margin: 10px 0;
+    margin: 15px 0;
   }
 
-  /* Style the actual links */
   .nav-links li a {
-    color: #0d3b66;            /* dark blue */
+    color: #0d3b66;
     text-decoration: none;
     font-weight: 500;
-    padding: 8px 15px;
+    padding: 8px 12px;
     display: block;
     border-radius: 6px;
     transition: background 0.3s, color 0.3s;
   }
 
-  /* Hover effect */
   .nav-links li a:hover {
-    background: #e6f0fa;       /* light blue background */
-    color: #082c4c;            /* even darker blue on hover */
+    background: #e6f0fa;
+    color: #082c4c;
   }
 }
+
 
 
 /* Hero section */
@@ -277,4 +277,5 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   .desktop-bg { display: none; }
   .mobile-bg { display: block; }
 }
+
 
