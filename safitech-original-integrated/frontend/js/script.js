@@ -19,22 +19,30 @@ document.querySelectorAll('.read-more-btn').forEach(button => {
   });
 });
 
-// ================= Mobile Menu =================
 const menuToggle = document.querySelector('.menu-toggle');
 const navLinks = document.querySelector('.nav-links');
+const overlay = document.querySelector('.overlay');
 
-// Toggle menu on hamburger click
+// Toggle menu
 menuToggle.addEventListener('click', (e) => {
-  e.stopPropagation(); // don’t trigger outside click
+  e.stopPropagation();
   navLinks.classList.toggle('active');
+  overlay.classList.toggle('active'); // show/hide overlay
 });
 
-// Close when clicking outside
+// Close when clicking overlay
+overlay.addEventListener('click', () => {
+  navLinks.classList.remove('active');
+  overlay.classList.remove('active');
+});
+
+// Close when clicking outside (extra safety)
 document.addEventListener('click', (e) => {
   if (navLinks.classList.contains('active') &&
       !navLinks.contains(e.target) &&
       !menuToggle.contains(e.target)) {
     navLinks.classList.remove('active');
+    overlay.classList.remove('active');
   }
 });
 
@@ -43,31 +51,11 @@ document.querySelectorAll('.nav-links a').forEach(link => {
   link.addEventListener('click', () => {
     if (window.innerWidth <= 768) {
       navLinks.classList.remove('active');
+      overlay.classList.remove('active');
     }
   });
 });
 
-// ================= Smooth Scroll for Nav Links =================
-document.querySelectorAll('nav a').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    e.preventDefault();
-
-    const targetId = this.getAttribute('href');
-    const targetElement = document.querySelector(targetId);
-
-    if (targetElement) {
-      if (targetId.includes('-service')) {
-        const service = targetId.replace('#', '').replace('-service', '');
-        showService(service);
-      } else {
-        document.querySelectorAll('.service-detail').forEach(detail => {
-          detail.classList.remove('active');
-        });
-        targetElement.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-  });
-});
 
 // ================= Contact Form =================
 document.addEventListener('DOMContentLoaded', () => {
@@ -124,3 +112,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
