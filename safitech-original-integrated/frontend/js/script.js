@@ -112,3 +112,21 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+  const menuToggle = document.querySelector('.menu-toggle');
+  const navLinks = document.querySelector('.nav-links');
+
+  // Toggle menu on hamburger click
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation(); // prevent triggering outside click
+    navLinks.classList.toggle('active');
+  });
+
+  // Close menu when clicking outside
+  document.addEventListener('click', (e) => {
+    if (navLinks.classList.contains('active') && !navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
+      navLinks.classList.remove('active');
+    }
+  });
+
+
