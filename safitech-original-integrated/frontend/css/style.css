@@ -167,47 +167,47 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   /* Show hamburger */
   .menu-toggle {
     display: block;
-    cursor: pointer;
-    z-index: 1001; /* keep it above menu */
   }
 
-  /* Sidebar nav-links */
+  /* Hide nav-links initially */
   .nav-links {
-    position: fixed;
-    top: 0;
-    right: -250px;           /* hide off-screen */
-    width: 220px;
-    height: 100%;
-    background: #fff;
-    flex-direction: column;
-    padding: 60px 20px;
-    box-shadow: -2px 0 8px rgba(0,0,0,0.2);
-    transition: right 0.3s ease-in-out;
-    z-index: 1000;
+    display: none;
+    flex-direction: column;   /* stack vertically */
+    background: #fff;         /* white background */
+    position: absolute;
+    top: 60px;                /* just below navbar */
+    right: 10px;              /* align to right side */
+    width: 200px;             /* smaller sidebar size */
+    padding: 12px 0;
+    border-radius: 8px;       /* rounded edges */
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15); /* floating effect */
   }
 
-  /* When active, slide in */
+  /* Show links when .active is added */
   .nav-links.active {
-    right: 0;
+    display: flex;
   }
 
   .nav-links li {
-    margin: 15px 0;
+    text-align: left;        /* align links to left */
+    margin: 5px 15px;
   }
 
+  /* Style the actual links */
   .nav-links li a {
     color: #0d3b66;          /* dark blue */
     text-decoration: none;
     font-weight: 500;
+    padding: 8px 12px;
     display: block;
-    padding: 10px;
     border-radius: 5px;
     transition: background 0.3s, color 0.3s;
   }
 
+  /* Hover effect */
   .nav-links li a:hover {
-    background: #e6f0fa;
-    color: #082c4c;
+    background: #e6f0fa;     /* light blue */
+    color: #082c4c;          /* darker blue */
   }
 }
 
