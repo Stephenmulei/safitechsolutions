@@ -27,36 +27,35 @@ mobileMenuBtn.addEventListener('click', function() {
     navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
 });
 
-// Smooth scrolling for navigation links
-document.querySelectorAll('nav a').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
+// Mobile menu functionality with overlay
+const menuToggle = document.querySelector('.mobile-menu-btn'); // hamburger button
+const navLinks = document.querySelector('.nav-links');         // sidebar menu
+const overlay = document.querySelector('.overlay');            // dark background
 
-        const targetId = this.getAttribute('href');
-        const targetElement = document.querySelector(targetId);
+if (menuToggle && navLinks && overlay) {
+  // Toggle menu open/close
+  menuToggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    navLinks.classList.toggle('active');
+    overlay.classList.toggle('active');
+  });
 
-        if (targetElement) {
-            if (targetId.includes('-service')) {
-                const service = targetId.replace('#', '').replace('-service', '');
-                showService(service);
-            } else {
-                document.querySelectorAll('.service-detail').forEach(detail => {
-                    detail.classList.remove('active');
-                });
-                targetElement.scrollIntoView({ behavior: 'smooth' });
-            }
-        }
+  // Close when clicking overlay
+  overlay.addEventListener('click', () => {
+    navLinks.classList.remove('active');
+    overlay.classList.remove('active');
+  });
+
+  // Close when clicking a nav link
+  document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('active');
+      overlay.classList.remove('active');
     });
-});
+  });
+}
 
-// Close mobile menu when clicking on a link
-document.querySelectorAll('nav a').forEach(link => {
-    link.addEventListener('click', function() {
-        if (window.innerWidth <= 768) {
-            navMenu.style.display = 'none';
-        }
-    });
-});
+
 
 // Contact form submission
 document.addEventListener('DOMContentLoaded', () => {
@@ -112,3 +111,4 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
