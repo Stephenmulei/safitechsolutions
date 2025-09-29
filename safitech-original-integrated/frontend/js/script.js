@@ -1,83 +1,81 @@
-// ================= Service Detail Functionality =================
+// Function to show a specific service detail
 function showService(service) {
-  document.querySelectorAll('.service-detail').forEach(detail => {
-    detail.classList.remove('active');
-  });
+    document.querySelectorAll('.service-detail').forEach(detail => {
+        detail.classList.remove('active');
+    });
 
-  const serviceDetail = document.getElementById(service + '-service');
-  if (serviceDetail) {
-    serviceDetail.classList.add('active');
-    serviceDetail.scrollIntoView({ behavior: 'smooth' });
-  }
+    const serviceDetail = document.getElementById(service + '-service');
+    if (serviceDetail) {
+        serviceDetail.classList.add('active');
+        serviceDetail.scrollIntoView({ behavior: 'smooth' });
+    }
 }
 
-// "Read More" buttons
+// Add event listeners to all "Read More" buttons
 document.querySelectorAll('.read-more-btn').forEach(button => {
-  button.addEventListener('click', function() {
-    const service = this.getAttribute('data-service');
-    showService(service);
-  });
+    button.addEventListener('click', function() {
+        const service = this.getAttribute('data-service');
+        showService(service);
+    });
 });
 
-const menuToggle = document.querySelector('.menu-toggle');
-const navLinks = document.querySelector('.nav-links');
-const overlay = document.querySelector('.overlay');
+// Mobile menu functionality
+const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+const navMenu = document.querySelector('nav ul');
 
-// Toggle menu
-menuToggle.addEventListener('click', (e) => {
-  e.stopPropagation();
-  navLinks.classList.toggle('active');
-  overlay.classList.toggle('active'); // show/hide overlay
+mobileMenuBtn.addEventListener('click', function() {
+    navMenu.style.display = navMenu.style.display === 'flex' ? 'none' : 'flex';
 });
 
-// Close when clicking overlay
-overlay.addEventListener('click', () => {
-  navLinks.classList.remove('active');
-  overlay.classList.remove('active');
+// Smooth scrolling for navigation links
+document.querySelectorAll('nav a').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+
+        if (targetElement) {
+            if (targetId.includes('-service')) {
+                const service = targetId.replace('#', '').replace('-service', '');
+                showService(service);
+            } else {
+                document.querySelectorAll('.service-detail').forEach(detail => {
+                    detail.classList.remove('active');
+                });
+                targetElement.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+    });
 });
 
-// Close when clicking outside (extra safety)
-document.addEventListener('click', (e) => {
-  if (navLinks.classList.contains('active') &&
-      !navLinks.contains(e.target) &&
-      !menuToggle.contains(e.target)) {
-    navLinks.classList.remove('active');
-    overlay.classList.remove('active');
-  }
+// Close mobile menu when clicking on a link
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function() {
+        if (window.innerWidth <= 768) {
+            navMenu.style.display = 'none';
+        }
+    });
 });
 
-// Close when clicking a nav link
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => {
-    if (window.innerWidth <= 768) {
-      navLinks.classList.remove('active');
-      overlay.classList.remove('active');
-    }
-  });
-});
-
-
-// ================= Contact Form =================
+// Contact form submission
 document.addEventListener('DOMContentLoaded', () => {
   const contactForm = document.getElementById('contactForm');
   const formStatus = document.getElementById('formStatus');
-
   if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (formStatus) formStatus.textContent = 'Sending...';
-
       const data = {
         name: contactForm.name.value,
         email: contactForm.email.value,
         subject: contactForm.subject ? contactForm.subject.value : '',
         message: contactForm.message.value
       };
-
       try {
-        const resp = await fetch('/api/contact', {
+        const resp = await fetch('/api/contact', {   // ✅ Fixed endpoint
           method: 'POST',
-          headers: {'Content-Type': 'application/json'},
+          headers: {'Content-Type':'application/json'},
           body: JSON.stringify(data)
         });
         const result = await resp.json();
@@ -94,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// ================= Dropdown =================
+// Dropdown toggle on click
 document.addEventListener("DOMContentLoaded", () => {
   const dropBtn = document.querySelector(".dropbtn");
   const dropdownContent = document.querySelector(".dropdown-content");
@@ -107,9 +105,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     window.addEventListener("click", (e) => {
       if (!e.target.matches(".dropbtn")) {
-        dropdownContent.classList.remove("show");
+        if (dropdownContent.classList.contains("show")) {
+          dropdownContent.classList.remove("show");
+        }
       }
     });
   }
 });
-
