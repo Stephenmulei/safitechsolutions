@@ -210,7 +210,26 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
     background: #e6f0fa;
     color: #082c4c;
   }
+}/* Overlay behind the mobile menu */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.4);  /* semi-transparent black */
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+  z-index: 999; /* just below the nav-links */
 }
+
+/* Show overlay when active */
+.overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
 
 
 
@@ -277,5 +296,6 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   .desktop-bg { display: none; }
   .mobile-bg { display: block; }
 }
+
 
 
