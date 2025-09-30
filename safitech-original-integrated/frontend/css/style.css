@@ -164,11 +164,12 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
 
 /* =============== Mobile Styles =============== */
 @media (max-width: 768px) {
-  /* Show hamburger */
+  /* Show hamburger on the right */
   .menu-toggle {
     display: block;
+    margin-left: auto; /* Push hamburger to the right */
   }
-
+  
   /* Hide nav-links initially */
   .nav-links {
     display: none;
@@ -176,25 +177,25 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
     background: #fff;         /* white background */
     position: absolute;
     top: 60px;                /* just below navbar */
-    left: 50%;
-    transform: translateX(-50%); /* center horizontally */
-    width: 80%;               /* narrower than full screen */
+    right: 20px;              /* align to right side */
+    width: 80%;               /* resizable width */
     max-width: 320px;         /* limit max size */
+    min-width: 200px;         /* minimum width */
     padding: 15px 0;
     border-radius: 10px;      /* smooth rounded corners */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* subtle shadow */
   }
-
+  
   /* Show links when .active is added */
   .nav-links.active {
     display: flex;
   }
-
+  
   .nav-links li {
     text-align: center;
     margin: 10px 0;
   }
-
+  
   /* Style the actual links */
   .nav-links li a {
     color: #0d3b66;            /* dark blue */
@@ -205,7 +206,7 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
     border-radius: 6px;
     transition: background 0.3s, color 0.3s;
   }
-
+  
   /* Hover effect */
   .nav-links li a:hover {
     background: #e6f0fa;       /* light blue background */
@@ -213,6 +214,13 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   }
 }
 
+/* Optional: Adjust for smaller screens */
+@media (max-width: 480px) {
+  .nav-links {
+    width: 85%;               /* slightly wider on small screens */
+    right: 10px;              /* less margin */
+  }
+}
 
 /* Hero section */
 #home.hero {
@@ -277,4 +285,5 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   .desktop-bg { display: none; }
   .mobile-bg { display: block; }
 }
+
 
