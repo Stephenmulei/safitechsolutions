@@ -163,7 +163,7 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
 }
 
 /* =============== Mobile Styles =============== */
-@media (max-width: 500px) {
+@media (max-width: 768px) {
   /* Show hamburger on the right */
   .menu-toggle {
     display: block;
@@ -177,12 +177,12 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
     background: #fff;         /* white background */
     position: absolute;
     top: 60px;                /* just below navbar */
-    right: 10px;              /* align to right side */
-    width: 50%;               /* resizable width */
-    max-width: 200px;         /* limit max size */
-    min-width: 150px;         /* minimum width */
-    padding: 10px 0;
-    border-radius: 10px;      /* smooth rounded corners */
+    right: 15px;              /* align to right side */
+    width: 60%;               /* smaller width */
+    max-width: 220px;         /* smaller max size */
+    min-width: 180px;         /* smaller minimum width */
+    padding: 10px 0;          /* less padding */
+    border-radius: 8px;       /* slightly smaller corners */
     box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* subtle shadow */
   }
   
@@ -193,7 +193,7 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   
   .nav-links li {
     text-align: center;
-    margin: 10px 0;
+    margin: 6px 0;            /* less margin */
   }
   
   /* Style the actual links */
@@ -201,10 +201,11 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
     color: #0d3b66;            /* dark blue */
     text-decoration: none;
     font-weight: 500;
-    padding: 8px 10px;
+    padding: 6px 12px;        /* smaller padding */
     display: block;
-    border-radius: 6px;
+    border-radius: 5px;
     transition: background 0.3s, color 0.3s;
+    font-size: 0.95rem;       /* slightly smaller text */
   }
   
   /* Hover effect */
@@ -217,11 +218,10 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
 /* Optional: Adjust for smaller screens */
 @media (max-width: 480px) {
   .nav-links {
-    width: 85%;               /* slightly wider on small screens */
+    width: 70%;               /* adjust for small screens */
     right: 10px;              /* less margin */
   }
 }
-
 /* Hero section */
 #home.hero {
   position: relative;
@@ -285,6 +285,7 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   .desktop-bg { display: none; }
   .mobile-bg { display: block; }
 }
+
 
 
 
