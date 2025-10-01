@@ -196,6 +196,106 @@ function initContactForm() {
 }
 
 // ============================================
+// NEWSLETTER SUBSCRIPTION
+// ============================================
+function initNewsletterSubscription() {
+  // Find the newsletter form in the footer
+  const footerForms = document.querySelectorAll('footer form');
+  let subscribeForm = null;
+  
+  // Find the form that contains an email input (newsletter form)
+  footerForms.forEach(form => {
+    const emailInput = form.querySelector('input[type="email"]');
+    if (emailInput && !form.id) { // Newsletter form doesn't have an ID
+      subscribeForm = form;
+    }
+  });
+  
+  if (!subscribeForm) {
+    console.log('Newsletter subscription form not found');
+    return;
+  }
+  
+  console.log('Newsletter form initialized');
+  
+  // Create status message element if it doesn't exist
+  let statusElement = subscribeForm.querySelector('.subscribe-status');
+  if (!statusElement) {
+    statusElement = document.createElement('p');
+    statusElement.className = 'subscribe-status';
+    statusElement.style.marginTop = '10px';
+    statusElement.style.fontSize = '0.9rem';
+    subscribeForm.appendChild(statusElement);
+  }
+  
+  subscribeForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const emailInput = subscribeForm.querySelector('input[type="email"]');
+    const submitBtn = subscribeForm.querySelector('button[type="submit"]');
+    
+    if (!emailInput) {
+      console.error('Email input not found');
+      return;
+    }
+    
+    const email = emailInput.value.trim();
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      statusElement.textContent = 'Please enter a valid email address.';
+      statusElement.style.color = '#dc3545';
+      return;
+    }
+    
+    // Disable button and show loading state
+    const originalBtnText = submitBtn.textContent;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Subscribing...';
+      submitBtn.style.opacity = '0.6';
+    }
+    
+    statusElement.textContent = 'Processing...';
+    statusElement.style.color = '#ffc107';
+    
+    try {
+      // Send to newsletter API endpoint
+      const response = await fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      
+      const result = await response.json();
+      
+      if (response.ok) {
+        statusElement.textContent = '✓ Successfully subscribed! Check your email.';
+        statusElement.style.color = '#28a745';
+        subscribeForm.reset();
+        
+        console.log('Newsletter subscription successful:', email);
+      } else {
+        statusElement.textContent = '✗ ' + (result.error || 'Subscription failed. Please try again.');
+        statusElement.style.color = '#dc3545';
+      }
+    } catch (err) {
+      statusElement.textContent = '✗ Network error. Please try again later.';
+      statusElement.style.color = '#dc3545';
+      console.error('Newsletter subscription error:', err);
+    } finally {
+      // Re-enable button
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalBtnText;
+        submitBtn.style.opacity = '1';
+      }
+    }
+  });
+}
+
+// ============================================
 // INITIALIZATION
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -204,6 +304,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initReadMoreButtons();
   initDropdown();
   initContactForm();
+  initNewsletterSubscription();
   
   console.log('Website initialized successfully');
 });
