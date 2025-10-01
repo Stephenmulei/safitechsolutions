@@ -17,30 +17,39 @@ function showService(service) {
 // MOBILE NAVIGATION
 // ============================================
 function initMobileMenu() {
-  const menuToggle = document.querySelector('.menu-toggle');
+  const menuToggle = document.querySelector('.mobile-menu-btn');
   const navLinks = document.querySelector('.nav-links');
   
-  if (!menuToggle || !navLinks) return;
+  if (!menuToggle || !navLinks) {
+    console.warn('Mobile menu elements not found. Check your HTML for .mobile-menu-btn and .nav-links classes.');
+    return;
+  }
+  
+  console.log('Mobile menu initialized successfully');
   
   // Toggle menu when hamburger is clicked
   menuToggle.addEventListener('click', (e) => {
+    e.preventDefault();
     e.stopPropagation();
+    
+    // Simply toggle the 'active' class - CSS handles display
     navLinks.classList.toggle('active');
+    
+    console.log('Menu toggled. Active:', navLinks.classList.contains('active'));
   });
   
   // Close menu when clicking outside
   document.addEventListener('click', (e) => {
+    // Check if click is outside both menu and toggle button
     if (!navLinks.contains(e.target) && !menuToggle.contains(e.target)) {
       navLinks.classList.remove('active');
     }
   });
   
-  // Close menu when a link is clicked (mobile only)
+  // Close menu when a link is clicked
   navLinks.querySelectorAll('a').forEach(link => {
     link.addEventListener('click', () => {
-      if (window.innerWidth <= 768) {
-        navLinks.classList.remove('active');
-      }
+      navLinks.classList.remove('active');
     });
   });
 }
