@@ -261,7 +261,7 @@ function initNewsletterSubscription() {
     statusElement.style.color = '#ffc107';
     
     try {
-     const response = await fetch("https://script.google.com/macros/s/AKfycby4hLgyiwKzC8DomvlKOmyRftzYsqkA-eq4oTW_mSiXJ2K7RSyb6h6GqI7E44qVvftw/exec", {
+     const response = await fetch(https://script.google.com/macros/s/AKfycby4hLgyiwKzC8DomvlKOmyRftzYsqkA-eq4oTW_mSiXJ2K7RSyb6h6GqI7E44qVvftw/exec, {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ email })
@@ -307,4 +307,5 @@ document.addEventListener('DOMContentLoaded', () => {
   
   console.log('Website initialized successfully');
 });
+
 
