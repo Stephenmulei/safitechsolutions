@@ -196,104 +196,6 @@ function initContactForm() {
 }
 
 // ============================================
-// NEWSLETTER SUBSCRIPTION
-// ============================================
-function initNewsletterSubscription() {
-  // Find the newsletter form in the footer
-  const footerForms = document.querySelectorAll('footer form');
-  let subscribeForm = null;
-  
-  // Find the form that contains an email input (newsletter form)
-  footerForms.forEach(form => {
-    const emailInput = form.querySelector('input[type="email"]');
-    if (emailInput && !form.id) { // Newsletter form doesn't have an ID
-      subscribeForm = form;
-    }
-  });
-  
-  if (!subscribeForm) {
-    console.log('Newsletter subscription form not found');
-    return;
-  }
-  
-  console.log('Newsletter form initialized');
-  
-  // Create status message element if it doesn't exist
-  let statusElement = subscribeForm.querySelector('.subscribe-status');
-  if (!statusElement) {
-    statusElement = document.createElement('p');
-    statusElement.className = 'subscribe-status';
-    statusElement.style.marginTop = '10px';
-    statusElement.style.fontSize = '0.9rem';
-    subscribeForm.appendChild(statusElement);
-  }
-  
-  subscribeForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const emailInput = subscribeForm.querySelector('input[type="email"]');
-    const submitBtn = subscribeForm.querySelector('button[type="submit"]');
-    
-    if (!emailInput) {
-      console.error('Email input not found');
-      return;
-    }
-    
-    const email = emailInput.value.trim();
-    
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      statusElement.textContent = 'Please enter a valid email address.';
-      statusElement.style.color = '#dc3545';
-      return;
-    }
-    
-    // Disable button and show loading state
-    const originalBtnText = submitBtn.textContent;
-    if (submitBtn) {
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Subscribing...';
-      submitBtn.style.opacity = '0.6';
-    }
-    
-    statusElement.textContent = 'Processing...';
-    statusElement.style.color = '#ffc107';
-    
-      const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbw4kig_ny9XiLHtcduxy96f-hP5gAUIIpOH2gK4geD-6qZPtQ7eGbVYU8PSFSTTRutt/exec; 
-      
-      // Send to Google Sheets via Apps Script
-      const response = await fetch(GOOGLE_SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors', // Required for Google Apps Script
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email })
-      });
-      
-      // Note: no-cors mode doesn't allow reading the response
-      // We'll assume success if no error is thrown
-      statusElement.textContent = '✓ Successfully subscribed! Thank you.';
-      statusElement.style.color = '#28a745';
-      subscribeForm.reset();
-      
-      console.log('Newsletter subscription sent:', email);
-      
-    } catch (err) {
-      statusElement.textContent = '✗ Network error. Please try again later.';
-      statusElement.style.color = '#dc3545';
-      console.error('Newsletter subscription error:', err);
-    } finally {
-      // Re-enable button
-      if (submitBtn) {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalBtnText;
-        submitBtn.style.opacity = '1';
-      }
-    }
-  });
-}
-
-// ============================================
 // INITIALIZATION
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -302,7 +204,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initReadMoreButtons();
   initDropdown();
   initContactForm();
-  initNewsletterSubscription();
   
   console.log('Website initialized successfully');
 });
