@@ -260,25 +260,24 @@ function initNewsletterSubscription() {
     statusElement.textContent = 'Processing...';
     statusElement.style.color = '#ffc107';
     
-    try {
-     const response = await fetch(https://script.google.com/macros/s/AKfycbxhuHcyw0MiNhI9PKOvdRn9JBMdIXzogEF4xcMk2ZNRHk0kA2PxiXPh2SFt7FGts1QF/exec, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ email })
-});
-
-      const result = await response.json();
+      const GOOGLE_SCRIPT_URL = https://script.google.com/macros/s/AKfycbw4kig_ny9XiLHtcduxy96f-hP5gAUIIpOH2gK4geD-6qZPtQ7eGbVYU8PSFSTTRutt/exec; 
       
-      if (response.ok) {
-        statusElement.textContent = '✓ Successfully subscribed! Check your email.';
-        statusElement.style.color = '#28a745';
-        subscribeForm.reset();
-        
-        console.log('Newsletter subscription successful:', email);
-      } else {
-        statusElement.textContent = '✗ ' + (result.error || 'Subscription failed. Please try again.');
-        statusElement.style.color = '#dc3545';
-      }
+      // Send to Google Sheets via Apps Script
+      const response = await fetch(GOOGLE_SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors', // Required for Google Apps Script
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email })
+      });
+      
+      // Note: no-cors mode doesn't allow reading the response
+      // We'll assume success if no error is thrown
+      statusElement.textContent = '✓ Successfully subscribed! Thank you.';
+      statusElement.style.color = '#28a745';
+      subscribeForm.reset();
+      
+      console.log('Newsletter subscription sent:', email);
+      
     } catch (err) {
       statusElement.textContent = '✗ Network error. Please try again later.';
       statusElement.style.color = '#dc3545';
@@ -307,6 +306,3 @@ document.addEventListener('DOMContentLoaded', () => {
   
   console.log('Website initialized successfully');
 });
-
-
-
