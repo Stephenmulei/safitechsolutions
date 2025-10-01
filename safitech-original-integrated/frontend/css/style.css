@@ -162,71 +162,96 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   cursor: pointer;
 }
 
-/* =============== Mobile Styles =============== */
-@media (max-width: 768px) {
-  /* Show hamburger on the right */
-  .mobile-toggle {
-  display: block;
-  margin-left: auto;
-  /* Add these for better styling */
+/* =============== Desktop Navigation (Default) =============== */
+nav ul.nav-links {
+  display: flex;
+  list-style: none;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul.nav-links li {
+  margin-left: 30px;
+}
+
+nav ul.nav-links li a {
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+nav ul.nav-links li a:hover {
+  color: var(--primary);
+}
+
+/* Hide hamburger menu on desktop */
+.mobile-menu-btn {
+  display: none;
   background: none;
   border: none;
   font-size: 1.5rem;
   cursor: pointer;
-  color: #0d3b66;
+  color: var(--dark);
 }
+
+/* =============== Mobile Navigation =============== */
+@media (max-width: 768px) {
+  /* Show hamburger menu on mobile */
+  .mobile-menu-btn {
+    display: block;
+    margin-left: auto;
   }
   
-  /* Hide nav-links initially */
-  .nav-links {
+  /* Hide nav-links by default on mobile */
+  nav ul.nav-links {
     display: none;
-    flex-direction: column;   /* stack vertically */
-    background: #fff;         /* white background */
+    flex-direction: column;
+    background: #fff;
     position: absolute;
-    top: 60px;                /* just below navbar */
-    right: 15px;              /* align to right side */
-    width: 60%;               /* smaller width */
-    max-width: 220px;         /* smaller max size */
-    min-width: 180px;         /* smaller minimum width */
-    padding: 10px 0;          /* less padding */
-    border-radius: 8px;       /* slightly smaller corners */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1); /* subtle shadow */
+    top: 60px;
+    right: 15px;
+    width: 60%;
+    max-width: 220px;
+    min-width: 180px;
+    padding: 10px 0;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 999;
   }
   
-  /* Show links when .active is added */
-  .nav-links.active {
+  /* Show nav-links when active class is added */
+  nav ul.nav-links.active {
     display: flex;
   }
   
-  .nav-links li {
+  nav ul.nav-links li {
     text-align: center;
-    margin: 6px 0;            /* less margin */
+    margin: 6px 0;
+    margin-left: 0; /* Reset desktop margin */
   }
   
-  /* Style the actual links */
-  .nav-links li a {
-    color: #0d3b66;            /* dark blue */
-    text-decoration: none;
-    font-weight: 500;
-    padding: 6px 12px;        /* smaller padding */
+  nav ul.nav-links li a {
+    color: #0d3b66;
+    padding: 6px 12px;
     display: block;
     border-radius: 5px;
     transition: background 0.3s, color 0.3s;
-    font-size: 0.95rem;       /* slightly smaller text */
+    font-size: 0.95rem;
   }
   
-  /* Hover effect */
-  .nav-links li a:hover {
-    background: #e6f0fa;       /* light blue background */
-    color: #082c4c;            /* even darker blue on hover */
+  nav ul.nav-links li a:hover {
+    background: #e6f0fa;
+    color: #082c4c;
   }
 }
 
-/* Optional: Adjust for smaller screens */
+/* =============== Smaller Mobile Screens =============== */
 @media (max-width: 480px) {
-  .nav-links {
-    width: 70%;               /* adjust for small screens */
-    right: 10px;              /* less margin */
+  nav ul.nav-links {
+    width: 70%;
+    right: 10px;
   }
 }
 /* Hero section */
@@ -292,6 +317,7 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   .desktop-bg { display: none; }
   .mobile-bg { display: block; }
 }
+
 
 
 
