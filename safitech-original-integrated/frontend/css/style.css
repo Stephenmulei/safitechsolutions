@@ -165,9 +165,16 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
 /* =============== Mobile Styles =============== */
 @media (max-width: 768px) {
   /* Show hamburger on the right */
-  .menu-toggle {
-    display: block;
-    margin-left: auto; /* Push hamburger to the right */
+  .mobile-menu-btn {
+  display: block;
+  margin-left: auto;
+  /* Add these for better styling */
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #0d3b66;
+}
   }
   
   /* Hide nav-links initially */
@@ -285,6 +292,7 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   .desktop-bg { display: none; }
   .mobile-bg { display: block; }
 }
+
 
 
 
