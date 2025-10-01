@@ -165,7 +165,7 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
 /* =============== Mobile Styles =============== */
 @media (max-width: 768px) {
   /* Show hamburger on the right */
-  .mobile-menu-btn {
+  .mobile-toggle {
   display: block;
   margin-left: auto;
   /* Add these for better styling */
@@ -292,6 +292,7 @@ footer { background:var(--dark); color:white; padding:50px 0 20px; }
   .desktop-bg { display: none; }
   .mobile-bg { display: block; }
 }
+
 
 
 
