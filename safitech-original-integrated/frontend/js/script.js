@@ -262,7 +262,7 @@ function initNewsletterSubscription() {
     try {
       // IMPORTANT: Replace this URL with your Google Apps Script Web App URL
       // Get it from: Extensions → Apps Script → Deploy → Web app URL
-      const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrckWtZmKB78ouc1NQGPuszO-aw1qophGGaJhPwameI5c4HLGpf2Fz8udIOgc8_6jP/exec"; 
+      const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzoNb6gbh5ishr0wYFrjUZjv92w0kclMHGktI7ao9RRezH8qZajL7D7TUo9Oop0rIyx/exec"; 
       
       // Send to Google Sheets via Apps Script
       const response = await fetch(GOOGLE_SCRIPT_URL, {
@@ -308,5 +308,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   console.log('Website initialized successfully');
 });
+
 
 
